@@ -25,7 +25,7 @@ import static java.lang.Math.tan;
 
 public class MainActivity extends Activity {
 
-    private Button buttonOne, buttonPlus, buttonTwo, buttonEqual, buttonThree, buttonFour, buttonFive, buttonSix, buttonSeven, buttonEight, buttonNine, buttonZero, buttonPoint, buttonDev, buttonMul, buttonMinus, buttonMi, buttonGen, buttonExchange, buttonSin, buttonCos, buttonTan, buttonAllClear;
+    private Button buttonOne, buttonTwo, buttonThree, buttonFour, buttonFive, buttonSix, buttonSeven, buttonEight, buttonNine, buttonZero,  buttonPoint,  buttonPlus, buttonMinus,buttonMul,buttonDev, buttonMi, buttonGen, buttonExchange, buttonSin, buttonCos, buttonTan,  buttonEqual,buttonAllClear;
     private EditText editText;//显示输入的数字
     private String opt = "+";//操作符
     private double n1 = 0.0, n2 = 0.0;//操作数
@@ -40,9 +40,7 @@ public class MainActivity extends Activity {
 
         //获取按钮的id
         buttonOne = (Button) findViewById(R.id.buttonOne);
-        buttonPlus = (Button) findViewById(R.id.buttonPlus);
         buttonTwo = (Button) findViewById(R.id.buttonTwo);
-        buttonEqual = (Button) findViewById(R.id.buttonEqual);
         buttonThree = (Button) findViewById(R.id.buttonThree);
         buttonFour = (Button) findViewById(R.id.buttonFour);
         buttonFive = (Button) findViewById(R.id.buttonFive);
@@ -52,9 +50,10 @@ public class MainActivity extends Activity {
         buttonNine = (Button) findViewById(R.id.buttonNine);
         buttonZero = (Button) findViewById(R.id.buttonZero);
         buttonPoint = (Button) findViewById(R.id.buttonPoint);
-        buttonDev = (Button) findViewById(R.id.buttonDev);
-        buttonMul = (Button) findViewById(R.id.buttonMul);
+        buttonPlus = (Button) findViewById(R.id.buttonPlus);
         buttonMinus = (Button) findViewById(R.id.buttonMinus);
+        buttonMul = (Button) findViewById(R.id.buttonMul);
+        buttonDev = (Button) findViewById(R.id.buttonDev);
         buttonMi = (Button) findViewById(R.id.buttonMi);
         buttonGen = (Button) findViewById(R.id.buttonGen);
         buttonExchange = (Button) findViewById(R.id.buttonExchange);
@@ -86,6 +85,7 @@ public class MainActivity extends Activity {
         buttonSin.setOnClickListener(lisenter);
         buttonCos.setOnClickListener(lisenter);
         buttonTan.setOnClickListener(lisenter);
+        buttonEqual = (Button) findViewById(R.id.buttonEqual);
         buttonAllClear.setOnClickListener(lisenter);
     }
 
@@ -111,69 +111,12 @@ public class MainActivity extends Activity {
                         textView.setText(str);
                         break;
                     }
-                    case R.id.buttonPlus://+
-                    {
-                        if (i == 0) {
-                            i = i + 1;
-                            String str = editText.getText().toString();
-                            n1 = Double.parseDouble(str);
-                            opt = "+";
-                            textView.setText(n1 + opt);
-                            editText.setText("");
-                        } else {
-                            String str = editText.getText().toString();
-                            n2 = Double.parseDouble(str);
-                            n1 = n1 + n2;
-                            textView.setText(n1 + opt);
-                            editText.setText("");
-                        }
-                        break;
-                    }
                     case R.id.buttonTwo://2
                     {
                         String str = editText.getText().toString();
                         editText.setText(str + 2);
                         str = editText.getText().toString();
                         textView.setText(str);
-                        break;
-                    }
-                    case R.id.buttonEqual://操作符=
-                    {
-                        i = 0;
-                        j = 0;
-                        if (opt == "+") {
-                            String str = editText.getText().toString();
-                            n2 = Double.parseDouble(str);
-                            textView.setText(n1 + opt + n2 + "=");
-                            editText.setText((n1 + n2) + "");
-                        } else if (opt == "-") {
-                            String str = editText.getText().toString();
-                            n2 = Double.parseDouble(str);
-                            textView.setText(n1 + opt + n2 + "=");
-                            editText.setText((n1 - n2) + "");
-                        } else if (opt == "*") {
-                            String str = editText.getText().toString();
-                            n2 = Double.parseDouble(str);
-                            textView.setText(n1 + opt + n2 + "=");
-                            editText.setText((n1 * n2) + "");
-                        } else if (opt == "/") {
-                            String str = editText.getText().toString();
-                            n2 = Double.parseDouble(str);
-                            if (n2 == 0) {
-                                editText.setText("");
-                                textView.setText("除数不能为0");
-                                break;
-                            } else {
-                                textView.setText(n1 + opt + n2 + "=");
-                                editText.setText((n1 / n2) + "");
-                            }
-                        } else if (opt == "^") {
-                            String str = editText.getText().toString();
-                            n2 = Double.parseDouble(str);
-                            textView.setText(n1 + opt + n2 + "=");
-                            editText.setText((pow(n1, n2)) + "");
-                        }
-
                         break;
                     }
                     case R.id.buttonThree://3
@@ -242,13 +185,25 @@ public class MainActivity extends Activity {
                         } else //如果没有小数点
                         {
                             if (str.equals("0"))//如果开始为0，
+                            {
                                 editText.setText(("0" + ".").toString());
+                            }
                             else if (str.equals(""))//如果初时显示为空，就什么也不做
                             {
 
-                            } else
+                            } else {
                                 editText.setText(str + ".");
+                            }
                         }
+                        break;
+                    }
+                    case R.id.buttonMul://操作符*
+                    {
+                        String str = editText.getText().toString();
+                        n1 = Double.parseDouble(str);
+                        opt = "*";
+                        editText.setText("");
+                        textView.setText(n1 + opt);
                         break;
                     }
                     case R.id.buttonDev://操作符 /
@@ -260,13 +215,22 @@ public class MainActivity extends Activity {
                         textView.setText(n1 + opt);
                         break;
                     }
-                    case R.id.buttonMul://操作符*
+                    case R.id.buttonPlus://+
                     {
-                        String str = editText.getText().toString();
-                        n1 = Double.parseDouble(str);
-                        opt = "*";
-                        editText.setText("");
-                        textView.setText(n1 + opt);
+                        if (i == 0) {
+                            i = i + 1;
+                            String str = editText.getText().toString();
+                            n1 = Double.parseDouble(str);
+                            opt = "+";
+                            textView.setText(n1 + opt);
+                            editText.setText("");
+                        } else {
+                            String str = editText.getText().toString();
+                            n2 = Double.parseDouble(str);
+                            n1 = n1 + n2;
+                            textView.setText(n1 + opt);
+                            editText.setText("");
+                        }
                         break;
                     }
                     case R.id.buttonMinus://操作符-
@@ -335,9 +299,49 @@ public class MainActivity extends Activity {
                     {
                         String str = editText.getText().toString();
                         n1 = Double.parseDouble(str);
-                        if (str.length() > 0)
+                        if (str.length() > 0) {
                             editText.setText(-n1 + "");
+                        }
                         textView.setText(-n1 + "");
+                        break;
+                    }
+                    case R.id.buttonEqual://操作符=
+                    {
+                        i = 0;
+                        j = 0;
+                        if (opt == "+") {
+                            String str = editText.getText().toString();
+                            n2 = Double.parseDouble(str);
+                            textView.setText(n1 + opt + n2 + "=");
+                            editText.setText((n1 + n2) + "");
+                        } else if (opt == "-") {
+                            String str = editText.getText().toString();
+                            n2 = Double.parseDouble(str);
+                            textView.setText(n1 + opt + n2 + "=");
+                            editText.setText((n1 - n2) + "");
+                        } else if (opt == "*") {
+                            String str = editText.getText().toString();
+                            n2 = Double.parseDouble(str);
+                            textView.setText(n1 + opt + n2 + "=");
+                            editText.setText((n1 * n2) + "");
+                        } else if (opt == "/") {
+                            String str = editText.getText().toString();
+                            n2 = Double.parseDouble(str);
+                            if (n2 == 0) {
+                                editText.setText("");
+                                textView.setText("除数不能为0");
+                                break;
+                            } else {
+                                textView.setText(n1 + opt + n2 + "=");
+                                editText.setText((n1 / n2) + "");
+                            }
+                        } else if (opt == "^") {
+                            String str = editText.getText().toString();
+                            n2 = Double.parseDouble(str);
+                            textView.setText(n1 + opt + n2 + "=");
+                            editText.setText((pow(n1, n2)) + "");
+                        }
+
                         break;
                     }
                     case R.id.buttonAllClear://AC
